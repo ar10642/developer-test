@@ -70,16 +70,20 @@
         },
 
         methods: {
-            add_row() {
+            addRow() {
                 // Add new row to data with column keys
             },
 
-            remove_row(row_index) {
+            removeRow(row_index) {
                 // remove the given row
             },
 
-            add_column() {
-
+            addColumn() {
+                const newKey = 'newColumn_' + this.columns.length;
+                this.columns.push({key: newKey});
+                this.data.forEach(row => {
+                  row[newKey] = '';
+                })
             },
 
             updateColumnKey(column, event) {
