@@ -13,6 +13,7 @@
                                     <input type="text"
                                            class="form-control"
                                            :value="column.key"
+                                           :ref="('title_' + column.key)"
                                            @input="updateColumnKey(column, $event)"
                                     />
                                 </th>
@@ -27,7 +28,7 @@
                             </tbody>
                         </table>
 
-                        <button type="button" class="btn btn-secondary">Add Column</button>
+                        <button type="button" class="btn btn-secondary" @click="addColumn(event)">Add Column</button>
                         <button type="button" class="btn btn-secondary">Add Row</button>
                     </div>
 
@@ -78,11 +79,16 @@
                 // remove the given row
             },
 
-            addColumn() {
+            addColumn(event) {
                 const newKey = 'newColumn_' + this.columns.length;
                 this.columns.push({key: newKey});
                 this.data.forEach(row => {
                   row[newKey] = '';
+                })
+                this.$nextTick(() => {
+                    const titleInput = this.$refs['title_' + newKey][0];
+                    titleInput.focus();
+                    titleInput.select();
                 })
             },
 
