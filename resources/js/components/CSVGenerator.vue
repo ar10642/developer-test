@@ -17,19 +17,23 @@
                                            @input="updateColumnKey(column, $event)"
                                     />
                                 </th>
+                                <th>&nbsp;</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr v-for="row in data">
-                                <td v-for="(dataColumn, columnName) in row">
+                                <td v-for="(dataColumn, columnName, index) in row">
                                     <input type="text" class="form-control" v-model="row[columnName]"/>
+                                </td>
+                                <td class="delete-cell">
+                                    <button type="button" class="btn btn-secondary" @click="$bvModal.show('delete-row-modal')">Delete</button>
                                 </td>
                             </tr>
                             </tbody>
                         </table>
 
                         <button type="button" class="btn btn-secondary" @click="addColumn(event)">Add Column</button>
-                        <button type="button" class="btn btn-secondary">Add Row</button>
+                        <button type="button" class="btn btn-secondary" @click="addRow()">Add Row</button>
                     </div>
 
                     <div class="card-footer text-right">
@@ -38,6 +42,9 @@
                 </div>
             </div>
         </div>
+        <b-modal id="delete-row-modal">
+            Are you sure you want to delete this row?
+        </b-modal>
     </div>
 
 </template>
@@ -72,7 +79,11 @@
 
         methods: {
             addRow() {
-                // Add new row to data with column keys
+                const newRow = {};
+                this.columns.forEach(column => {
+                    newRow[column.key] = '';
+                });
+                this.data.push(newRow);
             },
 
             removeRow(row_index) {
@@ -125,5 +136,10 @@
 </script>
 
 <style scoped>
+
+    .delete-cell {
+        display: flex;
+        justify-content: center;
+    }
 
 </style>
