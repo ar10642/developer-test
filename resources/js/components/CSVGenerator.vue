@@ -21,12 +21,12 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="row in data">
-                                <td v-for="(dataColumn, columnName, index) in row">
+                            <tr v-for="(row, index) in data">
+                                <td v-for="(dataColumn, columnName) in row">
                                     <input type="text" class="form-control" v-model="row[columnName]"/>
                                 </td>
                                 <td class="delete-cell">
-                                    <button type="button" class="btn btn-secondary" @click="$bvModal.show('delete-row-modal')">Delete</button>
+                                    <button type="button" class="btn btn-secondary" @click="showRemoveRowConfirmation(index)">Delete</button>
                                 </td>
                             </tr>
                             </tbody>
@@ -42,7 +42,7 @@
                 </div>
             </div>
         </div>
-        <b-modal id="delete-row-modal">
+        <b-modal id="delete-row-modal" @ok="removeRow(selectedIndex)">
             Are you sure you want to delete this row?
         </b-modal>
     </div>
@@ -72,8 +72,8 @@
                     {key: 'first_name'},
                     {key: 'last_name'},
                     {key: 'emailAddress'},
-
-                ]
+                ],
+                selectedIndex: null
             }
         },
 
@@ -86,8 +86,14 @@
                 this.data.push(newRow);
             },
 
-            removeRow(row_index) {
+            removeRow(rowIndex) {
                 // remove the given row
+                this.data.splice(rowIndex);
+            },
+
+            showRemoveRowConfirmation(rowIndex) {
+                this.selectedIndex = rowIndex;
+                this.$bvModal.show('delete-row-modal');
             },
 
             addColumn(event) {
