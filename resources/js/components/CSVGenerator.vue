@@ -96,7 +96,7 @@
                 this.$bvModal.show('delete-row-modal');
             },
 
-            addColumn(event) {
+            addColumn() {
                 const newKey = 'newColumn_' + this.columns.length;
                 this.columns.push({key: newKey});
                 this.data.forEach(row => {
@@ -132,7 +132,10 @@
             },
 
             async submit() {
-                const response = await axios.patch('/api/csv-export', this.data);
+                const response = await axios.patch('/api/csv-export', {
+                    columns: this.columns,
+                    data: this.data
+                });
                 const type = response.headers['content-type'];
                 const blob = new Blob([response.data], { 
                     type: type, encoding: 'UTF-8' 

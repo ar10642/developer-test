@@ -20,8 +20,22 @@ class CsvExport extends Controller {
 		];
 
 		$export = function() use($request) {
+
 			$handle = fopen('php://output', 'w');
-			foreach($request->input() as $row) {
+
+			// Verify request has the expected information
+			if(!$request->has('columns') || !$request->has('data')) {
+				abort(400);
+			}
+
+			// Generate and write the header row 
+			$columns = collect($request->columns)->map(function($column) {
+				return $column['key'];
+			});
+			fputcsv($handle, $columns->toArray());
+
+			// Write the data rows
+			foreach($request->data as $row) {
 				fputcsv($handle, $row);
 			}
 			fclose($handle);
