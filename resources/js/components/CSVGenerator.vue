@@ -88,7 +88,7 @@
 
             removeRow(rowIndex) {
                 // remove the given row
-                this.data.splice(rowIndex);
+                this.data.splice(rowIndex, 1);
             },
 
             showRemoveRowConfirmation(rowIndex) {
@@ -123,7 +123,7 @@
 
                 this.data.forEach(
                     (row) => {
-                        if (row[oldKey]) {
+                        if (row.hasOwnProperty(oldKey)) {
                             row[column.key] = row[oldKey];
                             delete row[oldKey];
                         }
