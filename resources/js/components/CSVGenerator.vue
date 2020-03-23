@@ -131,8 +131,16 @@
                 )
             },
 
-            submit() {
-                return axios.patch('/api/csv-export', this.data);
+            async submit() {
+                const response = await axios.patch('/api/csv-export', this.data);
+                const type = response.headers['content-type'];
+                const blob = new Blob([response.data], { 
+                    type: type, encoding: 'UTF-8' 
+                });
+                const link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = 'CsvExport.csv';
+                link.click();
             }
         },
 
