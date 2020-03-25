@@ -9,7 +9,7 @@ use Tests\TestCase;
 class CsvExportTest extends TestCase
 {
     /**
-     * A basic feature test example.
+     * Test CSV exports successfully with correct input
      *
      * @return void
      */
@@ -43,4 +43,16 @@ class CsvExportTest extends TestCase
         $this->assertEquals($csvResponse, $response->streamedContent());
 
     }
+
+    /**
+     * Test CSV export failes with bad input
+     *
+     * @return void
+     */
+    public function testCsvExportFailsWithBadInput()
+    {
+        $response = $this->json('PATCH', '/api/csv-export', []);
+        $response->assertStatus(400);
+    }
+
 }
