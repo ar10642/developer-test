@@ -8,27 +8,27 @@
                     <div class="card-body">
                         <table class="table table-bordered">
                             <thead>
-                            <tr>
-                                <th v-for="column in columns">
-                                    <input type="text"
-                                           class="form-control"
-                                           :value="column.key"
-                                           :ref="('title_' + column.key)"
-                                           @input="updateColumnKey(column, $event)"
-                                    />
-                                </th>
-                                <th>&nbsp;</th>
-                            </tr>
+                                <tr>
+                                    <th v-for="column in columns">
+                                        <input type="text"
+                                               class="form-control"
+                                               :value="column.key"
+                                               :ref="('title_' + column.key)"
+                                               @input="updateColumnKey(column, $event)"
+                                        />
+                                    </th>
+                                    <th>&nbsp;</th>
+                                </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="(row, index) in data">
-                                <td v-for="(dataColumn, columnName) in row">
-                                    <input type="text" class="form-control" v-model="row[columnName]"/>
-                                </td>
-                                <td class="delete-cell">
-                                    <button type="button" class="btn btn-secondary" @click="showRemoveRowConfirmation(index)">Delete</button>
-                                </td>
-                            </tr>
+                                <tr v-for="(row, index) in data">
+                                    <td v-for="(dataColumn, columnName) in row">
+                                        <input type="text" class="form-control" v-model="row[columnName]"/>
+                                    </td>
+                                    <td class="delete-cell">
+                                        <button type="button" class="btn btn-secondary" @click="showRemoveRowConfirmation(index)">Delete</button>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
 
@@ -145,9 +145,6 @@
                 link.download = 'CsvExport.csv';
                 link.click();
             }
-        },
-
-        watch: {
         }
     }
 </script>
@@ -155,8 +152,11 @@
 <style scoped>
 
     .delete-cell {
-        display: flex;
-        justify-content: center;
+        text-align: center;
+    }
+
+    .delete-cell button {
+        display: inline-block;
     }
 
 </style>
