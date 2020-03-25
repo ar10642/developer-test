@@ -24,7 +24,7 @@
         </style>
     </head>
     <body>
-        <div id="app">
+        <div id="app" role="main">
             <div class="container">
                 <div class="row">
                     <div class="col">

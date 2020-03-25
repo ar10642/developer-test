@@ -9,11 +9,12 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th v-for="column in columns">
+                                    <th v-for="(column, index) in columns">
                                         <input type="text"
                                                class="form-control"
                                                :value="column.key"
                                                :ref="('title_' + column.key)"
+                                               :aria-label="('Column ' + (index + 1) + ' heading')"
                                                @input="updateColumnKey(column, $event)"
                                         />
                                     </th>
@@ -23,7 +24,10 @@
                             <tbody>
                                 <tr v-for="(row, index) in data">
                                     <td v-for="(dataColumn, columnName) in row">
-                                        <input type="text" class="form-control" v-model="row[columnName]"/>
+                                        <input type="text" 
+                                               class="form-control" 
+                                               :aria-label="('Row ' + (index + 1) + ' ' + columnName + ' value')"
+                                               v-model="row[columnName]"/>
                                     </td>
                                     <td class="delete-cell">
                                         <button type="button" class="btn btn-secondary" @click="showRemoveRowConfirmation(index)">Delete</button>
@@ -37,7 +41,9 @@
                     </div>
 
                     <div class="card-footer text-right">
-                        <button class="btn btn-primary" type="button" @click="submit()">Export</button>
+                        <button class="btn btn-primary btn-primary-accessible" 
+                                type="button" 
+                                @click="submit()">Export</button>
                     </div>
                 </div>
             </div>
@@ -157,6 +163,14 @@
 
     .delete-cell button {
         display: inline-block;
+    }
+
+    .btn-primary-accessible {
+        background-color: #1b6ec2;
+    }
+
+    .btn-primary-accessible:hover {
+        background-color: #15518e;
     }
 
 </style>
