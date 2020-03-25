@@ -11,6 +11,11 @@ class CsvExport extends Controller {
 	public function convert(Request $request)
 	{
 
+		// Verify request has the expected information
+		if(!$request->has('columns') || !$request->has('data')) {
+			abort(400);
+		}
+
 		$headers = [
 			"Content-type" => "text/csv",
 			"Content-Disposition" => "attachment; filename=CsvExport.csv",
@@ -22,12 +27,7 @@ class CsvExport extends Controller {
 		$export = function() use($request) {
 
 			$handle = fopen('php://output', 'w');
-
-			// Verify request has the expected information
-			if(!$request->has('columns') || !$request->has('data')) {
-				abort(400);
-			}
-
+			
 			// Generate and write the header row 
 			$columns = collect($request->columns)->map(function($column) {
 				return $column['key'];
